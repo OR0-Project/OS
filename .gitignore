@@ -1,5 +1,6 @@
 # Build artifacts
 
+.vscode
 kernel/build
 kernel/cdrom/sys/*.bin
 kernel/obj
