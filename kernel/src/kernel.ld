@@ -1,8 +1,5 @@
 ENTRY(kmain)
 
-/* OUTPUT_FORMAT("binary")
-OUTPUT_ARCH(i386) */
-
 SECTIONS {
     . = 1M;
 
