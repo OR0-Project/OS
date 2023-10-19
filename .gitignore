@@ -1,0 +1,5 @@
+# Build artifacts
+
+kernel/build
+kernel/cdrom/sys/*.bin
+kernel/obj
