@@ -6,6 +6,7 @@
 
 // For testing
 #include "./arch/x86_64/cpuid.h"
+#include "./arch/x86_64/timer.h"
 
 #define OS_BANNER "                 .___\n\
   ____  ______ __| _/\n\
@@ -46,9 +47,6 @@ void show_startup_banner() {
         con_writes("Yes\n");
     else
         con_writes("No\n");
-
-    // Create exception dialog
-    throw_ex("kmain", "End of kernel - development needed");
 }
 
 /**
@@ -59,6 +57,9 @@ KERNEL_RESULT kmain() {
     con_clear();
 
     show_startup_banner();
+
+    // Create exception dialog
+    throw_ex("kmain", "End of kernel - development needed");
 
     // infinite loop
     while(1) {}
