@@ -7,11 +7,10 @@
 #define CONSOLE_W 80
 #define CONSOLE_H 25
 
-void con_setcolor(uint8_t new_color);
+void con_setcolor(uint8_t fore, uint8_t back);
 void con_clear();
 void con_writes(const char * str);
 void con_writec(char c);
-void con_resetpos();
 void con_setpos(int x, int y);
 
 #endif

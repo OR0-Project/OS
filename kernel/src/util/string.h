@@ -3,5 +3,6 @@
 #include "../sys/types.h"
 
 uint8_t strlen(const char *str);
+char * itoa(int value, char * str, int base);
 
 #endif

@@ -1,7 +1,7 @@
 # OS Makefile
 
 CC=gcc
-CFLAGS=-Wall -fno-pie -m64 -ffreestanding -nostdlib
+CFLAGS=-Wall -fno-pie -m32 -ffreestanding -nostdlib
 ASM=nasm
 
 default: all
@@ -30,9 +30,9 @@ kernel-iso:
 	grub-mkrescue -o build/os.iso cdrom
 
 build/kernel: prep multiboot.o kernel.o main.o 
-	ld -n -o build/kernel obj/multiboot.o obj/kernel.o obj/util/string.o obj/io/console.o obj/main.o -T src/kernel.ld
+	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/util/string.o obj/io/console.o obj/arch/x86_64/cpuid.o obj/main.o -T src/kernel.ld
 
-main.o: obj/io/console.o obj/util/string.o
+main.o: obj/io/console.o obj/util/string.o obj/arch/x86_64/cpuid.o
 	$(CC) -c src/main.c -o obj/main.o $(CFLAGS)
 
 # Includes
@@ -42,9 +42,12 @@ obj/io/console.o:
 obj/util/string.o:
 	$(CC) -c src/util/string.c -o obj/util/string.o $(CFLAGS)
 
+obj/arch/x86_64/cpuid.o:
+	$(CC) -c src/arch/x86_64/cpuid.c -o obj/arch/x86_64/cpuid.o $(CFLAGS)
+
 # Assembler stuff
 kernel.o:
-	$(ASM) -f elf64 src/kernel.asm -o obj/kernel.o
+	$(ASM) -f elf src/kernel.asm -o obj/kernel.o
 
 multiboot.o:
-	$(ASM) -f elf64 src/multiboot.asm -o obj/multiboot.o
+	$(ASM) -f elf src/multiboot.asm -o obj/multiboot.o
