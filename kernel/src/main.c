@@ -37,7 +37,7 @@ void show_startup_banner() {
     if(cpuid_can64())
         con_writes("Yes");
     else
-        con_writes("Yes");
+        con_writes("No");
 }
 
 /**
