@@ -29,4 +29,7 @@ typedef int32_t intptr_t;
 #define INT64_MAX (0x7FFFFFFFFFFFFFFFULL)
 #define INT64_MIN (-0x8000000000000000LL)
 
+// Miscellaneous types
+#define NULL ((void*)0)
+
 #endif

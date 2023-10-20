@@ -30,12 +30,15 @@ kernel-iso:
 	grub-mkrescue -o build/os.iso cdrom
 
 build/kernel: prep multiboot.o kernel.o main.o 
-	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/util/string.o obj/io/console.o obj/io/port.o obj/arch/x86_64/cpuid.o obj/main.o -T src/kernel.ld
+	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/util/string.o obj/io/console.o obj/io/port.o obj/arch/x86_64/cpuid.o obj/main.o -T src/kernel.ld
 
-main.o: obj/io/console.o obj/io/port.o obj/util/string.o obj/arch/x86_64/cpuid.o
+main.o: obj/io/console.o obj/io/port.o obj/kern/kutil.o obj/util/string.o obj/arch/x86_64/cpuid.o
 	$(CC) -c src/main.c -o obj/main.o $(CFLAGS)
 
 # Includes
+obj/kern/kutil.o:
+	$(CC) -c src/kern/kutil.c -o obj/kern/kutil.o $(CFLAGS)
+
 obj/io/console.o:
 	$(CC) -c src/io/console.c -o obj/io/console.o $(CFLAGS)
 

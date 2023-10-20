@@ -13,8 +13,8 @@ void _advance_pos(int count) {
         cx = 0;
         cy ++;
 
-        if(cy > CONSOLE_H) {
-            // TODO scroll
+        if(cy >= CONSOLE_H) {
+            cy = CONSOLE_H - 1; // Clamp to last line
         }
     }
 }
@@ -37,12 +37,31 @@ void con_writes(const char * str) {
     }
 }
 
+// Handles downscrolling of the console
+void handle_scroll() {
+    // Shift buffer by one horizontal line
+    for(int i = 0; i < CONSOLE_H * CONSOLE_W; i++) {
+        video_memory[i] = video_memory[i + CONSOLE_W];
+    }
+}
+
 // Writes a character to the console.
 void con_writec(char c) {
     // Handle newline
     if(c == '\n') {
         cx = 0;
         cy ++;
+
+        if(cy >= CONSOLE_H) {
+            cy = CONSOLE_H - 1;
+            handle_scroll();
+        }
+        return;
+    }
+
+    // Check if we need to scroll
+    if((cy * CONSOLE_W + cx) >= (CONSOLE_W * CONSOLE_H)) {
+        handle_scroll();
         return;
     }
 

@@ -1,4 +1,5 @@
 #include "./kern/kernel.h"
+#include "./kern/kutil.h"
 #include "./io/console.h"
 #include "./util/string.h"
 #include "./sys/types.h"
@@ -16,6 +17,7 @@
 // Shows the kernel startup banner
 void show_startup_banner() {
     // Show kernel brand and system info
+    con_setpos(0, 0);
     con_setcolor(0xA, 0);
     con_writes(":: OS Kernel v1.0. Copyright (C) 2023.\n\n");
     con_setcolor(0xF, 0);
@@ -24,7 +26,6 @@ void show_startup_banner() {
 
     char brand[49];
     get_cpu_brand_string(brand);
-
     con_setcolor(0xE, 0);
     con_writes("Processor: ");
     con_setcolor(0xF, 0);
@@ -35,9 +36,12 @@ void show_startup_banner() {
     con_setcolor(0xF, 0);
     
     if(cpuid_can64())
-        con_writes("Yes");
+        con_writes("Yes\n");
     else
-        con_writes("No");
+        con_writes("No\n");
+
+    // Create exception dialog
+    throw_ex("kmain", "End of kernel - development needed");
 }
 
 /**
