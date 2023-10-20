@@ -28,7 +28,7 @@ void get_cpu_brand_string(char* brand) {
 }
 
 // Checks whether the system can work in long mode.
-int cpuid_can64() {
+bool cpuid_can64() {
     uint32_t registers[4];
 
     cpuid(0x80000001, &registers[0], &registers[1], &registers[2], &registers[3]);
@@ -38,7 +38,7 @@ int cpuid_can64() {
 }
 
 // Checks whether the system is i686 (Pentium Pro/P6) capable.
-cpuid_isi686() {
+bool cpuid_isi686() {
     uint32_t eax, ebx, ecx, edx;
     cpuid(1, &eax, &ebx, &ecx, &edx);
     return edx & (1 << 15);

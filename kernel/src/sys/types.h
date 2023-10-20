@@ -1,6 +1,11 @@
 #ifndef __TYPES_H
 #define __TYPES_H
 
+// Boolean types
+typedef int bool;
+#define true 1
+#define false 0
+
 // Define fixed-size integer types
 typedef unsigned char uint8_t;
 typedef signed char int8_t;
