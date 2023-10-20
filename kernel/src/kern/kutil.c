@@ -75,3 +75,8 @@ void throw_ex(const char * ident, const char* message) {
     // Hang
     while(1);
 }
+
+// Kernel printf function
+void kprintf(const char* format, ...) {
+    throw_ex("kprintf", "Not implemented");
+}
