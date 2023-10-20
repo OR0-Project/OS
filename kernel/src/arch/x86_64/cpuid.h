@@ -12,6 +12,7 @@ typedef struct coreinfo_t {
 void cpuid(uint32_t code, uint32_t* a, uint32_t* b, uint32_t* c, uint32_t* d);
 void get_cpu_brand_string(char* brand);
 int cpuid_can64();
+int cpuid_isi686();
 coreinfo_t get_cpu_cores();
 
 #endif

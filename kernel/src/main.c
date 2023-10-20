@@ -24,6 +24,13 @@ void show_startup_banner() {
 
     con_writes(OS_BANNER);
 
+    // Check if an i686 processor was found
+    // This is the minimum for this kernel
+    if(!cpuid_isi686()) {
+        throw_ex("kmain", "i686 processor or higher required!");
+    }
+
+    // Get CPU info
     char brand[49];
     get_cpu_brand_string(brand);
     con_setcolor(0xE, 0);

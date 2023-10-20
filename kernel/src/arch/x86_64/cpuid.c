@@ -37,6 +37,13 @@ int cpuid_can64() {
     return (registers[3] & (1 << 29)) != 0;
 }
 
+// Checks whether the system is i686 (Pentium Pro/P6) capable.
+cpuid_isi686() {
+    uint32_t eax, ebx, ecx, edx;
+    cpuid(1, &eax, &ebx, &ecx, &edx);
+    return edx & (1 << 15);
+}
+
 // Gets the number of CPU cores
 coreinfo_t get_cpu_cores() {
     uint32_t eax, ebx, ecx, edx;
