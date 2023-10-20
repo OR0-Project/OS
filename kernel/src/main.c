@@ -1,5 +1,6 @@
 #include "./kern/kernel.h"
 #include "./kern/kutil.h"
+#include "./kern/kmem.h"
 #include "./io/console.h"
 #include "./util/string.h"
 #include "./sys/types.h"
@@ -44,9 +45,34 @@ void show_startup_banner() {
     con_setcolor(0xF, 0);
     
     if(cpuid_can64())
-        con_writes("Yes\n");
+        con_writes("Yes\n\n");
     else
-        con_writes("No\n");
+        con_writes("No\n\n");
+}
+
+// Sets up non paged kernel memory space
+void setup_kmem_space() {
+    con_writes("Setting up non-paged kernel memory space (");
+    
+    // Get kern mem space size
+    int size = (KMEM_NP_MAX - KMEM_NP_BASE) / 1024 / 1024;
+    char buf[4];
+    itoa(size, buf, 10);
+    con_writes(buf);
+    con_writes(" megabytes)...\n");
+
+    // Init
+    kmem_init();
+
+    // Do self test to ensure allocator is working correctly
+    void * ptr = kmalloc(32);
+
+    if(ptr)
+        con_writes("Kmem self test succeeded!");
+    else
+        throw_ex("kmain", "Failed to setup kernel memory space.");
+
+    kfree(ptr);
 }
 
 /**
@@ -56,7 +82,11 @@ KERNEL_RESULT kmain() {
     con_setcolor(0xF, 0);
     con_clear();
 
+    // Show startup banner
     show_startup_banner();
+
+    // Setup kernel memory space
+    setup_kmem_space();
 
     // Create exception dialog
     throw_ex("kmain", "End of kernel - development needed");
