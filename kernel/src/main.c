@@ -7,8 +7,8 @@
 #include "./build.h"
 
 // For testing
-#include "./arch/x86_64/cpuid.h"
-#include "./arch/x86_64/timer.h"
+#include "./arch/x86/cpuid.h"
+#include "./arch/x86/timer.h"
 
 #define OS_BANNER "                 .___\n\
   ____  ______ __| _/\n\
