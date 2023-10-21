@@ -1,9 +1,21 @@
 #include "console.h"
+#include "port.h"
 
 volatile uint16_t* video_memory = (uint16_t*)CON_VIDEO_MEMORY;
 uint16_t color = CON_DEFAULT_COLOR;
 uint8_t cx = 0;
 uint8_t cy = 0;
+
+// Updates the cursor
+void con_update_cursor(int x, int y)
+{
+	uint16_t pos = y * CONSOLE_W + x;
+ 
+	outportb(0x3D4, 0x0F);
+	outportb(0x3D5, (uint8_t) (pos & 0xFF));
+	outportb(0x3D4, 0x0E);
+	outportb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+}
 
 // Advances the cursor position
 void _advance_pos(int count) {
@@ -56,6 +68,7 @@ void con_writec(char c) {
             cy = CONSOLE_H - 1;
             handle_scroll();
         }
+
         return;
     }
 
@@ -67,10 +80,12 @@ void con_writec(char c) {
 
     video_memory[cy * CONSOLE_W + cx] = (uint16_t)((color << 8) | c);
     _advance_pos(1);
+    con_update_cursor(cx, cy);
 }
 
 // Sets the console position
 void con_setpos(int x, int y) {
     cx = x;
     cy = y;
+    con_update_cursor(cx, cy);
 }
