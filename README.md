@@ -5,7 +5,7 @@ Readme stuff.
 ## Dev Requirements
 
 OS: Linux
-Packages: gcc, nasm, grub-pc-bin, qemu-system-x86_64
+Packages: gcc, nasm, grub-pc-bin, qemu-system-x86_64, python3
 
 ## How to build
 

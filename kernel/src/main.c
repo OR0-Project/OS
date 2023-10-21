@@ -4,6 +4,7 @@
 #include "./io/console.h"
 #include "./util/string.h"
 #include "./sys/types.h"
+#include "./build.h"
 
 // For testing
 #include "./arch/x86_64/cpuid.h"
@@ -21,7 +22,12 @@ void show_startup_banner() {
     // Show kernel brand and system info
     con_setpos(0, 0);
     con_setcolor(0xA, 0);
-    con_writes(":: OS Kernel v1.0. Copyright (C) 2023.\n\n");
+    con_writes(":: OS Kernel v1.0. Copyright (C) 2023.\n");
+    con_writes(":: Commit: ");
+    con_writes(B_GIT_HASH);
+    con_writes(", Compiled: ");
+    con_writes(B_COMPTIME_START);
+    con_writes("\n\n");
     con_setcolor(0xF, 0);
 
     con_writes(OS_BANNER);
@@ -68,7 +74,7 @@ void setup_kmem_space() {
     void * ptr = kmalloc(32);
 
     if(ptr)
-        con_writes("Kmem self test succeeded!");
+        con_writes("Kmem self test succeeded!\n");
     else
         throw_ex("kmain", "Failed to setup kernel memory space.");
 

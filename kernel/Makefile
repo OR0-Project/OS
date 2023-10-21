@@ -8,6 +8,7 @@ default: all
 
 prep:
 	./prep.sh
+	python3 ./scripts/mkbuilddata.py
 
 clean:
 	rm -rf ./build
