@@ -9,3 +9,6 @@ kernel/src/build.h
 
 # ide config
 .idea
+
+# ignore vim swp file
+*.swp
