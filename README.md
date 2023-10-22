@@ -34,11 +34,11 @@ The current testing methodology is to simply build and test the operating system
 It's also recommended to test the OS on real hardware from time to time, since virtualized environments do not reflect real world hardware and conditions.
 
 ### Virtualized
-To test, simply run `make iso-test` to test without building, `make iso-test-build` to build & test at the same time.
+To test, simply run `make iso-test`.
 
-The test will open a QEMU window, where you can test the operating system.
+This workflow will open a QEMU window, where you can test the operating system.
 
-If you want to use VirtualBox or another hypervisor, simply select `os.iso` manually, and rerun the VM each time a change is introduced.
+If you want to use VirtualBox or another hypervisor, simply select `os.iso` manually, and rerun the VM each time you rebuild the OS.
 
 ### On real hardware
 
