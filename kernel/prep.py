@@ -41,7 +41,8 @@ def init_directories() -> bool:
         "obj/arch",
         "obj/arch/x86",
         "obj/io",
-        "build"
+        "build",
+        "cdrom/sys"
     ]
     try:
         for dir in directories:

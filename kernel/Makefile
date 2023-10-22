@@ -35,29 +35,29 @@ build/kernel: prep multiboot.o kernel.o main.o
 
 # objects
 main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o
-	$(CC) -c src/main.c -o obj/main.o $(CFLAGS)
+	$(CC) -c src/main.c -o obj/main.o $(C_FLAGS)
 
 obj/kern/kutil.o:
-	$(CC) -c src/kern/kutil.c -o obj/kern/kutil.o $(CFLAGS)
+	$(CC) -c src/kern/kutil.c -o obj/kern/kutil.o $(C_FLAGS)
 
 obj/kern/kmem.o:
-	$(CC) -c src/kern/kmem.c -o obj/kern/kmem.o $(CFLAGS)
+	$(CC) -c src/kern/kmem.c -o obj/kern/kmem.o $(C_FLAGS)
 
 obj/dev/console.o:
-	$(CC) -c src/dev/console.c -o obj/dev/console.o $(CFLAGS)
+	$(CC) -c src/dev/console.c -o obj/dev/console.o $(C_FLAGS)
 
 obj/io/port.o:
-	$(CC) -c src/io/port.c -o obj/io/port.o $(CFLAGS)
+	$(CC) -c src/io/port.c -o obj/io/port.o $(C_FLAGS)
 
 obj/util/string.o:
-	$(CC) -c src/util/string.c -o obj/util/string.o $(CFLAGS)
+	$(CC) -c src/util/string.c -o obj/util/string.o $(C_FLAGS)
 
 # x86 specific objects
 obj/arch/x86/cpuid.o:
-	$(CC) -c src/arch/x86/cpuid.c -o obj/arch/x86/cpuid.o $(CFLAGS)
+	$(CC) -c src/arch/x86/cpuid.c -o obj/arch/x86/cpuid.o $(C_FLAGS)
 
 obj/arch/x86/timer.o:
-	$(CC) -c src/arch/x86/timer.c -o obj/arch/x86/timer.o $(CFLAGS)
+	$(CC) -c src/arch/x86/timer.c -o obj/arch/x86/timer.o $(C_FLAGS)
 
 # Assembler stuff
 kernel.o:
