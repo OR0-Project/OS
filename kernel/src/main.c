@@ -104,5 +104,5 @@ void kernel_main() {
 	// TODO
     throw_ex("kmain", "End of kernel - development needed");
 
-    while(1);
+	return;
 }
