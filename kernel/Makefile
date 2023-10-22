@@ -5,9 +5,16 @@ ASM = nasm
 LINK = ld
 EMU = qemu-system-x86_64
 
+# 32-bit
 C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib -Iinc -c -lgcc
 ASM_FLAGS = -f elf
 LINK_FLAGS = -m elf_i386 -n
+
+# 64-bit
+#C_FLAGS = -Wall -fno-pie -m64 -ffreestanding -nostdlib -Iinc -c -lgcc
+#ASM_FLAGS = -f elf64
+#LINK_FLAGS = -m elf_x86_64 -n
+
 
 # targets
 default: all

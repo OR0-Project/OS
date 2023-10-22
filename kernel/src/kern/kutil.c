@@ -23,7 +23,7 @@ void throw_ex(const char * ident, const char* message) {
     uint32_t pcounter = get_program_counter();
 
     // Read the values of eax, ebx, ecx, and edx
-    asm volatile (
+    /*asm volatile (
         "mov %%eax, %0\n"
         "mov %%ebx, %1\n"
         "mov %%ecx, %2\n"
@@ -32,6 +32,7 @@ void throw_ex(const char * ident, const char* message) {
 		"mov %%ebp, %5\n"
         : "=r" (registers[0]), "=r" (registers[1]), "=r" (registers[2]), "=r" (registers[3]), "=r" (registers[4]), "=r" (registers[5])
     );
+	*/
 
     // Write a pretty message
     con_writec('\n');

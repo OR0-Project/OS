@@ -98,6 +98,8 @@ void init_kernel_memory() {
  * Kernel entry point.
  * */
 void kernel_main() {
+	// TODO: 64_bit
+
     splash();				// TODO: refactor (after printf)
 	init_kernel_memory();	// TODO: refactor (after printf)
 
