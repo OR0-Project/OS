@@ -31,9 +31,9 @@ kernel-iso:
 	grub-mkrescue -o build/os.iso cdrom
 
 build/kernel: prep multiboot.o kernel.o main.o 
-	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/io/console.o obj/io/port.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
+	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
 
-main.o: obj/io/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o
+main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o
 	$(CC) -c src/main.c -o obj/main.o $(CFLAGS)
 
 # Includes
@@ -43,8 +43,8 @@ obj/kern/kutil.o:
 obj/kern/kmem.o:
 	$(CC) -c src/kern/kmem.c -o obj/kern/kmem.o $(CFLAGS)
 
-obj/io/console.o:
-	$(CC) -c src/io/console.c -o obj/io/console.o $(CFLAGS)
+obj/dev/console.o:
+	$(CC) -c src/dev/console.c -o obj/dev/console.o $(CFLAGS)
 
 obj/io/port.o:
 	$(CC) -c src/io/port.c -o obj/io/port.o $(CFLAGS)

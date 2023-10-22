@@ -1,7 +1,7 @@
 #include "./kern/kernel.h"
 #include "./kern/kutil.h"
 #include "./kern/kmem.h"
-#include "./io/console.h"
+#include "./dev/console.h"
 #include "./util/string.h"
 #include "./sys/types.h"
 #include "./build.h"

@@ -1,5 +1,5 @@
 #include "kutil.h"
-#include "../io/console.h"
+#include "../dev/console.h"
 #include "../util/string.h"
 
 // Gets the program counter
