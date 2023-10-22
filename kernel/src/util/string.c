@@ -1,7 +1,7 @@
 #include "string.h"
 
 // Gets the string length
-uint8_t strlen(const char *str) {
+uint32_t strlen(const char *str) {
     uint8_t i;
 
     for(i = 0; str[i] != '\0'; i++);
@@ -15,7 +15,7 @@ char * itoa(int value, char * str, int base) {
     char * rc;
     char * ptr;
     char * low;
-    
+
     // Check for supported base.
     if ( base < 2 || base > 36 )
     {
@@ -52,4 +52,20 @@ char * itoa(int value, char * str, int base) {
     }
 
     return rc;
+}
+
+// Checks if a string is whitespace only
+bool strisws(const char* str) {
+    for(int i = 0; i < strlen(str); i++) {
+        switch(str[i]) {
+            default:
+                return false;
+            case '\0':
+            case ' ':
+            case '\n':
+                continue;
+        }
+    }
+
+    return true;
 }

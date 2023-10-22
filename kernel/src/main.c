@@ -44,7 +44,13 @@ void show_startup_banner() {
     con_setcolor(0xE, 0);
     con_writes("Processor: ");
     con_setcolor(0xF, 0);
-    con_writes(brand);
+
+    // Check if CPU name is known
+    if(strisws(brand))
+        con_writes("Generic x86 Processor");
+    else
+        con_writes(brand);
+
     con_writec('\n');
     con_setcolor(0xE, 0);
     con_writes("64-Bit Capable: ");
