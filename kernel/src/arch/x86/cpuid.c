@@ -35,20 +35,20 @@ bool cpuid_can64() {
     cpuid(0x80000001, &registers[0], &registers[1], &registers[2], &registers[3]);
 
     // Check if the LM (Long Mode) bit is set
-    return (registers[3] & (1 << 29)) != 0;
+    return (registers[3] >> 29) & 0b1u;
 }
 
 // Checks whether the system is i686 (Pentium Pro/P6) capable.
 bool cpuid_isi686() {
     uint32_t eax, ebx, ecx, edx;
     cpuid(1, &eax, &ebx, &ecx, &edx);
-    return edx & (1 << 15);
+    return (edx >> 15) & 0b1u;
 }
 
 // Gets the number of CPU cores
-coreinfo_t get_cpu_cores() {
+cpu_info_t get_cpu_cores() {
     uint32_t eax, ebx, ecx, edx;
-    coreinfo_t ci;
+	cpu_info_t ci;
 
     cpuid(1, &eax, &ebx, &ecx, &edx);
     ci.cores = (ecx >> 16) & 0xFF;

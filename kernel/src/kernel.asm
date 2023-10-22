@@ -1,15 +1,13 @@
-global _start
+global _kernel_main
 
 section .text
-extern main
+extern kernel_main
 
-_start:
+_kernel_main:
     mov esp, stack
-    call main
-
-    ; idle loop
+    mov ebp, stack
+    call kernel_main
     hlt
-    jmp $
 
 section .bss
 stack resb 4096  ; 4KB stack space

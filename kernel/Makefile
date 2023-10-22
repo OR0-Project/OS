@@ -4,7 +4,7 @@ CC = gcc
 ASM = nasm
 LINK = ld
 
-C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib -Iinc -c
+C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib -Iinc -c -lgcc
 ASM_FLAGS = -f elf
 LINK_FLAGS = -m elf_i386 -n
 
