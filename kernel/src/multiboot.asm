@@ -2,10 +2,10 @@ section .multiboot
 
 multiboot_header_start:
     dd 0xe85250d6										; magic number
-    dd 0												; protected mode code
+    dd 0												; i386 protected mode code
     dd multiboot_header_end - multiboot_header_start	; header length
 
-    ; checksum: 0x100000000 - (magic + arch + header_size)
+    ; checksum: 0x100000000 - (magic + mode_code + header_size)
     dd 0x100000000 - (0xe85250d6 + 0 + (multiboot_header_end - multiboot_header_start))
 
 multiboot_header_type:
