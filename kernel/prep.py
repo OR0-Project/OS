@@ -23,8 +23,8 @@ def set_build_info() -> bool:
         file.write(
             "#ifndef __BUILD_H\n"                           +\
             "#define __BUILD_H\n"                           +\
-            "#define B_GIT_HASH \"{commit_hash}\"\n"        +\
-            "#define B_COMPTIME_START \"{time_stamp}\"\n"   +\
+            f"#define B_GIT_HASH \"{commit_hash}\"\n"       +\
+            f"#define B_COMPTIME_START \"{time_stamp}\"\n"  +\
             "#endif"
         )
         file.close()
