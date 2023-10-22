@@ -6,7 +6,7 @@
 uint32_t get_program_counter();
 
 // Throws a kernel exception
-inline void throw_ex(const char * ident, const char* message);
+void throw_ex(const char * ident, const char* message);
 
 // Kernel printf function
 void kprintf(const char* format, ...);

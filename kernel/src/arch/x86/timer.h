@@ -4,6 +4,6 @@
 #include "../../sys/types.h"
 
 // Reads the timestamp counter using rdtsc
-inline uint64_t read_tsc();
+uint64_t read_tsc();
 
 #endif
