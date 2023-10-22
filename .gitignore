@@ -1,5 +1,4 @@
 # Build artifacts
-
 .vscode
 kernel/build
 kernel/cdrom/sys/*.bin
@@ -7,3 +6,6 @@ kernel/obj
 
 # build file
 kernel/src/build.h
+
+# ide config
+.idea
