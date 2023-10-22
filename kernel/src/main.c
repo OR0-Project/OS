@@ -7,9 +7,9 @@
 #include <build.h>
 
 // For testing
-#include "../inc/arch/cpuid.h"
-#include "arch/timer.h"
-#include "arch/msr.h"
+#include <arch/cpuid.h>
+#include <arch/timer.h>
+#include <arch/msr.h>
 
 #define OS_BANNER "                 .___\n\
   ____  ______ __| _/\n\
@@ -88,10 +88,8 @@ void init_kernel_memory() {
     // Do self test to ensure allocator is working correctly
     void * ptr = kmalloc(32);
 
-    if(ptr)
-        con_writes("Kmem self test succeeded!\n");
-    else
-        throw_ex("kmain", "Failed to setup kernel memory space.");
+    if(ptr)	{ con_writes("Kmem self test succeeded!\n"); }
+    else	{ throw_ex("kmain", "Failed to setup kernel memory space."); }
 
     kfree(ptr);
 }
@@ -99,12 +97,12 @@ void init_kernel_memory() {
 /**
  * Kernel entry point.
  * */
-void main() {
+void kernel_main() {
     splash();				// TODO: refactor (after printf)
 	init_kernel_memory();	// TODO: refactor (after printf)
 
 	// TODO
     throw_ex("kmain", "End of kernel - development needed");
 
-    while(1);
+	return;
 }

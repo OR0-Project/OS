@@ -3,11 +3,11 @@
 CC = gcc
 ASM = nasm
 LINK = ld
+EMU = qemu-system-x86_64
 
-C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib -Iinc -c
+C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib -Iinc -c -lgcc
 ASM_FLAGS = -f elf
 LINK_FLAGS = -m elf_i386 -n
-
 
 # targets
 default: all
@@ -22,9 +22,13 @@ clean:
 
 all: kernel-iso
 
-iso-test: clean all
-	echo Running QEMU...
-	qemu-system-x86_64 -m 256 -cdrom build/os.iso -cpu Westmere
+
+run: clean all
+	$(EMU) -m 256 -cdrom build/os.iso -cpu Westmere
+
+debug: clean all
+	gdb -q --args $(EMU) \
+        -enable-kvm -smp 2 -m 256 -cdrom build/os.iso -cpu Westmere
 
 
 # kernel artifacts

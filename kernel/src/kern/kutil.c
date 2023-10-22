@@ -19,7 +19,7 @@ uint32_t get_program_counter() {
 // Throws a kernel exception
 void throw_ex(const char * ident, const char* message) {
     // Dump registers
-    uint32_t registers[4];
+    uint32_t registers[6];
     uint32_t pcounter = get_program_counter();
 
     // Read the values of eax, ebx, ecx, and edx
@@ -27,8 +27,10 @@ void throw_ex(const char * ident, const char* message) {
         "mov %%eax, %0\n"
         "mov %%ebx, %1\n"
         "mov %%ecx, %2\n"
-        "mov %%edx, %3\n"
-        : "=r" (registers[0]), "=r" (registers[1]), "=r" (registers[2]), "=r" (registers[3])
+		"mov %%edx, %3\n"
+		"mov %%esp, %4\n"
+		"mov %%ebp, %5\n"
+        : "=r" (registers[0]), "=r" (registers[1]), "=r" (registers[2]), "=r" (registers[3]), "=r" (registers[4]), "=r" (registers[5])
     );
 
     // Write a pretty message
@@ -58,7 +60,7 @@ void throw_ex(const char * ident, const char* message) {
     // Dump regs
     con_writes(" r -> \n");
 
-    for(int i = 0; i < 4; i++) {
+    for(int i = 0; i < 6; i++) {
         char reg[] = "eax";
         reg[1] = reg[1] + i;
         con_writes("   - ");
@@ -67,11 +69,12 @@ void throw_ex(const char * ident, const char* message) {
 
         // Get hex val
         char valstr[] = "00000000";
-        itoa(reg[i], valstr, 16);
+        itoa(registers[i], valstr, 16);
         con_writes(valstr);
 
         con_writec('\n');
     }
+	con_writec('\n');
 
     // Hang
     while(1);

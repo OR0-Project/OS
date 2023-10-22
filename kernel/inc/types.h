@@ -1,29 +1,27 @@
 #ifndef __TYPES_H
 #define __TYPES_H
 
-// Boolean types
-typedef int bool;
-#define true 1
-#define false 0
 
-// Define fixed-size integer types
+// integer types
 typedef unsigned char uint8_t;
 typedef signed char int8_t;
 typedef unsigned short uint16_t;
 typedef signed short int16_t;
-typedef unsigned int uint32_t;
-typedef signed int int32_t;
+typedef unsigned long uint32_t;
+typedef signed long int32_t;
 typedef unsigned long long uint64_t;
 typedef signed long long int64_t;
 
-// Define pointer-sized integer types
-typedef uint32_t uintptr_t;
-typedef int32_t intptr_t;
+// boolean types
+typedef uint8_t bool;
+#define true 0b1u
+#define false 0b0u
 
-// Size types
-typedef unsigned int size_t;
+// pointer types
+typedef uint32_t size_t;
+#define NULL ((void*)0)
 
-// Define integer types for maximum and minimum values
+// integer min and max values
 #define UINT8_MAX (0xFF)
 #define INT8_MAX (0x7F)
 #define INT8_MIN (-0x80)
@@ -37,7 +35,5 @@ typedef unsigned int size_t;
 #define INT64_MAX (0x7FFFFFFFFFFFFFFFULL)
 #define INT64_MIN (-0x8000000000000000LL)
 
-// Miscellaneous types
-#define NULL ((void*)0)
 
 #endif
