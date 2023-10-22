@@ -8,9 +8,19 @@ If your system does not have mkdocs, you can install it by following their instr
 
 ## Dev Requirements
 
-OS: Linux
+OS: Linux / Windows (WSL)
 
 Packages (Debian): `gcc nasm grub-pc-bin qemu-system-x86_64 python3 python3-pip`
+
+### WSL specifics
+
+You can develop for this OS using Windows Subsystem for Linux (wsl) on Windows hosts.
+
+To do this, you need the following:
+ - A WSL distro. Ubuntu has been tested and works great.
+ - An X server for QEMU output. You can grab VcXSrv from [here](https://sourceforge.net/projects/vcxsrv/).
+
+When the above is satisfied, you can work on the OS as you would under Linux.
 
 ## How to build
 
