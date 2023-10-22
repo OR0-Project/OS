@@ -1,7 +1,8 @@
 #ifndef __MSR_H
 #define __MSR_H
 
-#include "../../sys/types.h"
+#include <types.h>
+
 
 // Checks if the CPU supports model specific registers
 bool msr_available();

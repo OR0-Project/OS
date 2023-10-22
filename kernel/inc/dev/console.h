@@ -1,6 +1,8 @@
 #ifndef __CONSOLE_H
 #define __CONSOLE_H
-#include "../sys/types.h"
+
+#include <types.h>
+
 
 #define CON_VIDEO_MEMORY 0xB8000
 #define CON_DEFAULT_COLOR 0x0F

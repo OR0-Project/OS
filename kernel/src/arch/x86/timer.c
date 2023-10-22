@@ -1,4 +1,5 @@
-#include "timer.h"
+#include <arch/timer.h>
+
 
 // Reads the timestamp counter using rdtsc
 uint64_t read_tsc() {

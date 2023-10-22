@@ -1,6 +1,8 @@
 #ifndef __KUTIL_H
 #define __KUTIL_H
-#include "../sys/types.h"
+
+#include <types.h>
+
 
 // Gets the program counter
 uint32_t get_program_counter();

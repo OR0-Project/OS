@@ -1,4 +1,4 @@
-ENTRY(kmain)
+ENTRY(main)
 
 SECTIONS {
     . = 1M;

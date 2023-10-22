@@ -1,5 +1,5 @@
-#include "console.h"
-#include "../io/port.h"
+#include <dev/console.h>
+#include <io/port.h>
 
 volatile uint16_t* video_memory = (uint16_t*)CON_VIDEO_MEMORY;
 uint16_t color = CON_DEFAULT_COLOR;

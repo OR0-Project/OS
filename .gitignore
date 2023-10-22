@@ -5,7 +5,7 @@ kernel/cdrom/sys/*.bin
 kernel/obj
 
 # build file
-kernel/src/build.h
+kernel/inc/build.h
 
 # ide config
 .idea

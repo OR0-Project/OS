@@ -1,8 +1,12 @@
 # kernel make file
 
 CC = gcc
-C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib
 ASM = nasm
+LINK = ld
+
+C_FLAGS = -Wall -fno-pie -m32 -ffreestanding -nostdlib -Iinc -c
+ASM_FLAGS = -f elf
+LINK_FLAGS = -m elf_i386 -n
 
 
 # targets
@@ -18,7 +22,7 @@ clean:
 
 all: kernel-iso
 
-iso-test: all
+iso-test: clean all
 	echo Running QEMU...
 	qemu-system-x86_64 -m 256 -cdrom build/os.iso -cpu Westmere
 
@@ -30,41 +34,45 @@ kernel-iso: build/kernel
 	grub-mkrescue -o build/os.iso cdrom
 
 build/kernel: prep multiboot.o kernel.o main.o 
-	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpuid.o obj/arch/x86/msr.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
+	$(LINK) $(LINK_FLAGS) -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpuid.o obj/arch/x86/msr.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
 
 
 # objects
 main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpuid.o obj/arch/x86/msr.o obj/arch/x86/timer.o
-	$(CC) -c src/main.c -o obj/main.o $(C_FLAGS)
+	$(CC) src/main.c -o obj/main.o $(C_FLAGS)
 
 obj/kern/kutil.o:
-	$(CC) -c src/kern/kutil.c -o obj/kern/kutil.o $(C_FLAGS)
+	$(CC) src/kern/kutil.c -o obj/kern/kutil.o $(C_FLAGS)
 
 obj/kern/kmem.o:
-	$(CC) -c src/kern/kmem.c -o obj/kern/kmem.o $(C_FLAGS)
+	$(CC) src/kern/kmem.c -o obj/kern/kmem.o $(C_FLAGS)
 
 obj/dev/console.o:
-	$(CC) -c src/dev/console.c -o obj/dev/console.o $(C_FLAGS)
+	$(CC) src/dev/console.c -o obj/dev/console.o $(C_FLAGS)
 
 obj/io/port.o:
-	$(CC) -c src/io/port.c -o obj/io/port.o $(C_FLAGS)
+	$(CC) src/io/port.c -o obj/io/port.o $(C_FLAGS)
 
 obj/util/string.o:
-	$(CC) -c src/util/string.c -o obj/util/string.o $(C_FLAGS)
+	$(CC) src/util/string.c -o obj/util/string.o $(C_FLAGS)
 
 # x86 specific objects
 obj/arch/x86/cpuid.o:
-	$(CC) -c src/arch/x86/cpuid.c -o obj/arch/x86/cpuid.o $(C_FLAGS)
+	$(CC) src/arch/x86/cpuid.c -o obj/arch/x86/cpuid.o $(C_FLAGS)
+	#$(ASM) src/arch/x86/cpuid.asm -o obj/arch/x86/cpuid_asm.o $(ASM_FLAGS)
+	#$(CC) -c src/arch/x86/cpuid.c -o obj/arch/x86/cpuid_c.o $(C_FLAGS)
+	#$(LINK) $(LINK_FLAGS) --relocatable -o obj/arch/x86/cpuid.o \
+    #		obj/arch/x86/cpuid_asm.o obj/arch/x86/cpuid_c.o
 
 obj/arch/x86/timer.o:
-	$(CC) -c src/arch/x86/timer.c -o obj/arch/x86/timer.o $(C_FLAGS)
+	$(CC) src/arch/x86/timer.c -o obj/arch/x86/timer.o $(C_FLAGS)
 
 obj/arch/x86/msr.o:
-	$(CC) -c src/arch/x86/msr.c -o obj/arch/x86/msr.o $(C_FLAGS)
+	$(CC) src/arch/x86/msr.c -o obj/arch/x86/msr.o $(C_FLAGS)
 
 # Assembler stuff
 kernel.o:
-	$(ASM) -f elf src/kernel.asm -o obj/kernel.o
+	$(ASM) src/kernel.asm -o obj/kernel.o $(ASM_FLAGS)
 
 multiboot.o:
-	$(ASM) -f elf src/multiboot.asm -o obj/multiboot.o
+	$(ASM) src/multiboot.asm -o obj/multiboot.o $(ASM_FLAGS)

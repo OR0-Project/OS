@@ -1,5 +1,5 @@
-#include "msr.h"
-#include "cpuid.h"
+#include <arch/msr.h>
+#include <arch/cpuid.h>
 
 // Checks if the CPU supports model specific registers
 bool msr_available() {

@@ -1,7 +1,8 @@
 #ifndef __PROCESS_H
 #define __PROCESS_H
 
-#include "./types.h"
+#include <types.h>
+
 
 // Process states
 #define PROC_STATE_WAITING 0

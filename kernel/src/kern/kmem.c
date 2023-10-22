@@ -1,4 +1,5 @@
-#include "./kmem.h"
+#include <kern/kmem.h>
+
 
 // Kernel memory
 char kmem[KMEM_NP_MAX - KMEM_NP_BASE];

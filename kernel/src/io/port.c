@@ -1,4 +1,5 @@
-#include "./port.h"
+#include <io/port.h>
+
 
 // Read a byte from an I/O port
 uint8_t inportb(uint16_t port) {

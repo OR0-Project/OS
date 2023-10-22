@@ -1,7 +1,8 @@
 #ifndef __KMEM_H
 #define __KMEM_H
 
-#include "../sys/types.h"
+#include <types.h>
+
 
 // 4 megabytes reserved kernel space
 #define KMEM_NP_BASE 0xC0000000

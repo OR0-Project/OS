@@ -1,7 +1,8 @@
 #ifndef PORT_H
 #define PORT_H
 
-#include "../sys/types.h"
+#include <types.h>
+
 
 // Read a byte from an I/O port
 uint8_t inportb(uint16_t port);

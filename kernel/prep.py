@@ -19,7 +19,7 @@ def set_build_info() -> bool:
     time_stamp = dt.strftime('%Y-%m-%d %H:%M:%S')
     
     print(f"commit hash: {commit_hash}\nwriting build.h...")
-    with open(WORK_DIR + "/src/build.h", 'w') as file:
+    with open(WORK_DIR + "/inc/build.h", 'w') as file:
         file.write(
             "#ifndef __BUILD_H\n"                           +\
             "#define __BUILD_H\n"                           +\

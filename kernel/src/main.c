@@ -1,15 +1,15 @@
-#include "./kern/kernel.h"
-#include "./kern/kutil.h"
-#include "./kern/kmem.h"
-#include "./dev/console.h"
-#include "./util/string.h"
-#include "./sys/types.h"
-#include "./build.h"
+#include <kern/kernel.h>
+#include <kern/kutil.h>
+#include <kern/kmem.h>
+#include <dev/console.h>
+#include <util/string.h>
+#include <types.h>
+#include <build.h>
 
 // For testing
-#include "./arch/x86/cpuid.h"
-#include "./arch/x86/timer.h"
-#include "./arch/x86/msr.h"
+#include "../inc/arch/cpuid.h"
+#include "arch/timer.h"
+#include "arch/msr.h"
 
 #define OS_BANNER "                 .___\n\
   ____  ______ __| _/\n\
@@ -19,7 +19,9 @@
            \\/     \\/\n\n"
 
 // Shows the kernel startup banner
-void show_startup_banner() {
+void splash() {
+	con_setcolor(0xF, 0);
+	con_clear();
     // Show kernel brand and system info
     con_setpos(0, 0);
     con_setcolor(0xA, 0);
@@ -70,7 +72,7 @@ void show_startup_banner() {
 }
 
 // Sets up non paged kernel memory space
-void setup_kmem_space() {
+void init_kernel_memory() {
     con_writes("Setting up non-paged kernel memory space (");
     
     // Get kern mem space size
@@ -97,21 +99,12 @@ void setup_kmem_space() {
 /**
  * Kernel entry point.
  * */
-KERNEL_RESULT kmain() {
-    con_setcolor(0xF, 0);
-    con_clear();
+void main() {
+    splash();				// TODO: refactor (after printf)
+	init_kernel_memory();	// TODO: refactor (after printf)
 
-    // Show startup banner
-    show_startup_banner();
-
-    // Setup kernel memory space
-    setup_kmem_space();
-
-    // Create exception dialog
+	// TODO
     throw_ex("kmain", "End of kernel - development needed");
 
-    // infinite loop
-    while(1) {}
-
-    return KERN_SUCCESS;
+    while(1);
 }

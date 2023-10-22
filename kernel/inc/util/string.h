@@ -1,6 +1,8 @@
 #ifndef _STRING_H
 #define _STRING_H
-#include "../sys/types.h"
+
+#include <types.h>
+
 
 // Gets the string length
 uint32_t strlen(const char *str);

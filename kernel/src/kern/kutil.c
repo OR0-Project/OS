@@ -1,6 +1,7 @@
-#include "kutil.h"
-#include "../dev/console.h"
-#include "../util/string.h"
+#include <kern/kutil.h>
+#include <dev/console.h>
+#include <util/string.h>
+
 
 // Gets the program counter
 uint32_t get_program_counter() {

@@ -1,4 +1,5 @@
-#include "string.h"
+#include <util/string.h>
+
 
 // Gets the string length
 uint32_t strlen(const char *str) {
