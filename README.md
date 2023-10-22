@@ -1,11 +1,16 @@
 # OS Project
 
-Readme stuff.
+This Readme is a summary of important information.
+
+To read extended documentation, run `mkdocs serve` in the root of this repository to view the OS documentation.
+
+If your system does not have mkdocs, you can install it by following their instructions [here](https://www.mkdocs.org/getting-started/).
 
 ## Dev Requirements
 
 OS: Linux
-Packages: gcc, nasm, grub-pc-bin, qemu-system-x86_64, python3
+
+Packages (Debian): `gcc nasm grub-pc-bin qemu-system-x86_64 python3 python3-pip`
 
 ## How to build
 
