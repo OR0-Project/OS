@@ -30,11 +30,11 @@ kernel-iso: build/kernel
 	grub-mkrescue -o build/os.iso cdrom
 
 build/kernel: prep multiboot.o kernel.o main.o 
-	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
+	ld -m elf_i386 -n -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpuid.o obj/arch/x86/msr.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
 
 
 # objects
-main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpuid.o obj/arch/x86/timer.o
+main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpuid.o obj/arch/x86/msr.o obj/arch/x86/timer.o
 	$(CC) -c src/main.c -o obj/main.o $(C_FLAGS)
 
 obj/kern/kutil.o:
@@ -58,6 +58,9 @@ obj/arch/x86/cpuid.o:
 
 obj/arch/x86/timer.o:
 	$(CC) -c src/arch/x86/timer.c -o obj/arch/x86/timer.o $(C_FLAGS)
+
+obj/arch/x86/msr.o:
+	$(CC) -c src/arch/x86/msr.c -o obj/arch/x86/msr.o $(C_FLAGS)
 
 # Assembler stuff
 kernel.o:

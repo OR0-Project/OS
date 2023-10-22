@@ -9,6 +9,7 @@
 // For testing
 #include "./arch/x86/cpuid.h"
 #include "./arch/x86/timer.h"
+#include "./arch/x86/msr.h"
 
 #define OS_BANNER "                 .___\n\
   ____  ______ __| _/\n\
@@ -60,6 +61,12 @@ void show_startup_banner() {
         con_writes("Yes\n\n");
     else
         con_writes("No\n\n");
+
+    // Debug: check if msr is available on cpu
+    if(msr_available())
+        con_writes("MSRS are supported!\n");
+    else
+        con_writes("MSRS are NOT supported.\n");
 }
 
 // Sets up non paged kernel memory space
