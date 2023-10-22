@@ -41,12 +41,12 @@ def init_directories() -> bool:
         "obj/arch",
         "obj/arch/x86",
         "obj/io",
-        "build",
-        "cdrom",
-        "cdrom/sys"
+        "build"
     ]
     try:
-        for dir in directories: os.mkdir(dir)
+        for dir in directories:
+            if not os.path.exists(dir):
+                os.mkdir(dir)
     except Exception as e:
         return False
     return True
