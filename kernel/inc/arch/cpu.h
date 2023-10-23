@@ -12,7 +12,7 @@ typedef struct cpu_info_t {
 } cpu_info_t;
 
 
-void cpuid(uint32_t code, uint32_t* a, uint32_t* b, uint32_t* c, uint32_t* d);  // TODO: cpuid in asm
+extern void cpuid(uint32_t code, uint32_t* a, uint32_t* b, uint32_t* c, uint32_t* d);  // TODO: cpuid in asm
 void get_cpu_brand_string(char* brand);
 bool cpuid_can64();
 bool cpuid_isi686();

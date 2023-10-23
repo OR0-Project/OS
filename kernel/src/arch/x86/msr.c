@@ -1,5 +1,5 @@
 #include <arch/msr.h>
-#include <arch/cpuid.h>
+#include <arch/cpu.h>
 
 
 // Checks if the CPU supports model specific registers

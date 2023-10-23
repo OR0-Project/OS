@@ -1,3 +1,14 @@
+; //////////////////////////////////////////////////////////////////////////////
+; // File:     Name:        multiboot.asm                                     //
+; //           Language:    x86_64 NASM assembly                              //
+; //                                                                          //
+; // Details:  this file holds the multiboot header for grub                  //
+; //                                                                          //
+; // Author:   Name:    Marijn Verschuren, Ralph Vreman                       //
+; //           Email:   marijnverschuren3@gmail.com                           //
+; //                                                                          //
+; // Date:     2023-10-23                                                     //
+; //////////////////////////////////////////////////////////////////////////////
 section .multiboot
 
 multiboot_header_start:
