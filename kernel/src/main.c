@@ -98,13 +98,14 @@ void init_kernel_memory() {
  * Kernel entry point.
  * */
 void kernel_main() {
-	// TODO: 64_bit
+	uint32_t* mem = (uint32_t*)0xb8000;
+	*mem = 0x2f4b2f4f;
 
-    splash();				// TODO: refactor (after printf)
-	init_kernel_memory();	// TODO: refactor (after printf)
+    //splash();				// TODO: refactor (after printf)
+	//init_kernel_memory();	// TODO: refactor (after printf)
 
 	// TODO
-    throw_ex("kmain", "End of kernel - development needed");
+    //throw_ex("kmain", "End of kernel - development needed");
 
 	return;
 }
