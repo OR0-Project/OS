@@ -75,7 +75,6 @@ void throw_ex(const char * ident, const char* message) {
 
         con_writec('\n');
     }
-	con_writec('\n');
 
     // Hang
     while(1);

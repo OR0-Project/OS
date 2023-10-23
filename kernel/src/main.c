@@ -33,37 +33,17 @@ void splash() {
 
     con_writes(OS_BANNER);
 
-
     // Get CPU info
-    char brand[49];
-    get_cpu_brand_string(brand);
+    cpu_info_t * cpu = get_cpu_info();
     con_setcolor(0xE, 0);
     con_writes("Processor: ");
     con_setcolor(0xF, 0);
-
-    // Check if CPU name is known
-    if(strisws(brand))
-        con_writes("Generic x86 Processor");
-    else
-        con_writes(brand);
-
+    con_writes(cpu->brand);
     con_writec('\n');
-    con_setcolor(0xE, 0);
-    con_writes("64-Bit Capable: ");
-    con_setcolor(0xF, 0);
 }
 
 // Sets up non paged kernel memory space
-void init_kernel_memory() {
-    con_writes("Setting up non-paged kernel memory space (");
-    
-    // Get kern mem space size
-    int size = (KMEM_NP_MAX - KMEM_NP_BASE) / 1024 / 1024;
-    char buf[4];
-    itoa(size, buf, 10);
-    con_writes(buf);
-    con_writes(" megabytes)...\n");
-
+void init_kernel_mem() {
     // Init
     kmem_init();
 
@@ -80,8 +60,8 @@ void init_kernel_memory() {
  * Kernel entry point.
  * */
 void kernel_main() {
+    init_kernel_mem();	// TODO: refactor (after printf)
 	splash();				// TODO: refactor (after printf)
-	init_kernel_memory();	// TODO: refactor (after printf)
 
 	read_tsc();
     throw_ex("kmain", "End of kernel - development needed");

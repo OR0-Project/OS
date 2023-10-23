@@ -1,6 +1,11 @@
 #include <arch/cpu.h>
+#include <kern/kmem.h>
+#include <kern/kutil.h>
+#include <types.h>
+#include <util/string.h>
 
-
+// Stores the current CPU information state
+cpu_info_t * cpu_info_state = NULL;
 
 // Get brand string
 void get_cpu_brand_string(char* brand) {
@@ -21,14 +26,38 @@ void get_cpu_brand_string(char* brand) {
     *brand = '\0';
 }
 
-// Gets the number of CPU cores
-cpu_info_t get_cpu_cores() {
+/**
+ * Gets information about the CPU.
+ * 
+ * Retrieved CPU info is persistently kept in kernel memory.
+ */
+cpu_info_t * get_cpu_info() {
+    if(cpu_info_state != NULL)
+        return cpu_info_state;
+
+    cpu_info_state = kmalloc(sizeof(cpu_info_t));
+
+    if(cpu_info_state == NULL)
+        throw_ex("get_cpu_info", "Unable to allocate memory.");
+
+    // Get brand string
+    get_cpu_brand_string(cpu_info_state->brand);
+
+    if(strisws(cpu_info_state->brand)) {
+        char genericBrand[] = "Generic x86 Processor";
+
+        for(int i = 0; i <= strlen(genericBrand); i++) {
+            cpu_info_state->brand[i] = genericBrand[i];
+        }
+    }
+
+    // Get family, model, and stepping
     uint32_t eax, ebx, ecx, edx;
-	cpu_info_t ci;
-
     cpuid(1, &eax, &ebx, &ecx, &edx);
-    ci.cores = (ecx >> 16) & 0xFF;
-    ci.threads = eax & 0xFFFF;   
 
-    return ci;
+    cpu_info_state->family = (eax >> 8) & 0xf;
+    cpu_info_state->model = (eax >> 4) & 0xf;
+    cpu_info_state->stepping = eax & 0xf;
+
+    return cpu_info_state;
 }
