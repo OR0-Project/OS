@@ -12,10 +12,10 @@ void con_update_cursor(int x, int y)
 {
 	uint16_t pos = y * CONSOLE_W + x;
  
-	outportb(0x3D4, 0x0F);
-	outportb(0x3D5, (uint8_t) (pos & 0xFF));
-	outportb(0x3D4, 0x0E);
-	outportb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+	port_out(0x3D4, 0x0F);
+	port_out(0x3D5, (uint8_t) (pos & 0xFF));
+	port_out(0x3D4, 0x0E);
+	port_out(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
 }
 
 // Advances the cursor position

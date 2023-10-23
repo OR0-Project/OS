@@ -9,7 +9,7 @@
 ; //                                                                          //
 ; // Date:     2023-10-23                                                     //
 ; //////////////////////////////////////////////////////////////////////////////
-global cpuid
+global cpuid, write_msr, read_msr, read_tsc
 section .text
 bits 64
 
@@ -25,4 +25,25 @@ cpuid:
 	mov [r10], ebx                  ; move the result for ebx from cpuid into memory
 	mov [r9], ecx                   ; move the result for ecx from cpuid into memory
 	mov [r8], edx                   ; move the result for edx from cpuid into memory
+	ret
+
+
+write_msr:
+	mov ecx, edi
+	mov rax, rsi
+	wrmsr
+	ret
+
+
+read_msr:
+	mov ecx, edi
+	rdmsr
+	ret
+
+
+read_tsc:
+	xor rax, rax
+	rdtsc
+	shl rdx, 32
+	or rax, rdx
 	ret

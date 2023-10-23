@@ -4,10 +4,7 @@
 #include <types.h>
 
 
-// Read a byte from an I/O port
-uint8_t inportb(uint16_t port);
-
-// Write a byte to an I/O port
-void outportb(uint16_t port, uint8_t data);
+uint8_t port_in(uint16_t port);
+void port_out(uint16_t port, uint8_t data);
 
 #endif

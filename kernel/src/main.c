@@ -8,8 +8,6 @@
 
 // For testing
 #include <arch/cpu.h>
-#include <arch/timer.h>
-#include <arch/msr.h>
 
 #define OS_BANNER "                 .___\n\
   ____  ______ __| _/\n\
@@ -35,11 +33,6 @@ void splash() {
 
     con_writes(OS_BANNER);
 
-    // Check if an i686 processor was found
-    // This is the minimum for this kernel
-    if(!cpuid_isi686()) {
-        throw_ex("kmain", "i686 processor or higher required!");
-    }
 
     // Get CPU info
     char brand[49];
@@ -58,17 +51,6 @@ void splash() {
     con_setcolor(0xE, 0);
     con_writes("64-Bit Capable: ");
     con_setcolor(0xF, 0);
-    
-    if(cpuid_can64())
-        con_writes("Yes\n\n");
-    else
-        con_writes("No\n\n");
-
-    // Debug: check if msr is available on cpu
-    if(msr_available())
-        con_writes("MSRS are supported!\n");
-    else
-        con_writes("MSRS are NOT supported.\n");
 }
 
 // Sets up non paged kernel memory space
@@ -86,7 +68,7 @@ void init_kernel_memory() {
     kmem_init();
 
     // Do self test to ensure allocator is working correctly
-    void * ptr = kmalloc(32);
+    void* ptr = kmalloc(32);
 
     if(ptr)	{ con_writes("Kmem self test succeeded!\n"); }
     else	{ throw_ex("kmain", "Failed to setup kernel memory space."); }
@@ -98,10 +80,10 @@ void init_kernel_memory() {
  * Kernel entry point.
  * */
 void kernel_main() {
-    splash();				// TODO: refactor (after printf)
+	splash();				// TODO: refactor (after printf)
 	init_kernel_memory();	// TODO: refactor (after printf)
 
-	// TODO
+	read_tsc();
     throw_ex("kmain", "End of kernel - development needed");
 
 	return;

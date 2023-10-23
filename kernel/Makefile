@@ -39,11 +39,11 @@ kernel-iso: build/kernel
 	grub-mkrescue -o build/os.iso cdrom
 
 build/kernel: prep multiboot.o kernel.o main.o 
-	$(LINK) $(LINK_FLAGS) -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpu.o obj/arch/x86/msr.o obj/arch/x86/timer.o obj/main.o -T src/kernel.ld
+	$(LINK) $(LINK_FLAGS) -o build/kernel obj/multiboot.o obj/kernel.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/dev/console.o obj/io/port.o obj/arch/x86/cpu.o obj/main.o -T src/kernel.ld
 
 
 # objects
-main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpu.o obj/arch/x86/msr.o obj/arch/x86/timer.o
+main.o: obj/dev/console.o obj/io/port.o obj/kern/kutil.o obj/kern/kmem.o obj/util/string.o obj/arch/x86/cpu.o
 	$(CC) src/main.c -o obj/main.o $(C_FLAGS)
 
 obj/kern/kutil.o:
@@ -56,7 +56,7 @@ obj/dev/console.o:
 	$(CC) src/dev/console.c -o obj/dev/console.o $(C_FLAGS)
 
 obj/io/port.o:
-	$(CC) src/io/port.c -o obj/io/port.o $(C_FLAGS)
+	$(ASM) src/io/port.asm -o obj/io/port.o $(ASM_FLAGS)
 
 obj/util/string.o:
 	$(CC) src/util/string.c -o obj/util/string.o $(C_FLAGS)
@@ -67,12 +67,6 @@ obj/arch/x86/cpu.o:
 	$(CC) -c src/arch/x86/cpu.c -o obj/arch/x86/cpu_c.o $(C_FLAGS)
 	$(LINK) $(LINK_FLAGS) --relocatable -o obj/arch/x86/cpu.o \
     		obj/arch/x86/cpu_asm.o obj/arch/x86/cpu_c.o
-
-obj/arch/x86/timer.o:
-	$(CC) src/arch/x86/timer.c -o obj/arch/x86/timer.o $(C_FLAGS)
-
-obj/arch/x86/msr.o:
-	$(CC) src/arch/x86/msr.c -o obj/arch/x86/msr.o $(C_FLAGS)
 
 # Assembler stuff
 kernel.o:

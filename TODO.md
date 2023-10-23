@@ -10,3 +10,8 @@
 
 ### Low Priority
 - [ ] legacy interrupt controller (8259 PIC)
+
+
+## TEST
+- [ ] read_msr, write_msr <cpu.h>
+- [ ] read_tsc            <cpu.h>
