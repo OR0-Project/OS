@@ -15,3 +15,6 @@ kernel/inc/build.h
 
 # Ignore memory dumps
 *.dmp
+
+# Work folder
+kernel/work

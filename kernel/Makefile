@@ -8,7 +8,7 @@ EMU = qemu-system-x86_64
 C_FLAGS = -Wall -fno-pie -m64 -ffreestanding -nostdlib -Iinc -c -lgcc
 ASM_FLAGS = -f elf64
 LINK_FLAGS = -m elf_x86_64 -n
-
+EMU_FLAGS = -monitor tcp:localhost:5555,server,nowait
 
 # targets
 default: all
@@ -25,11 +25,11 @@ all: kernel-iso
 
 
 run: clean all
-	$(EMU) -m 256 -cdrom build/os.iso -cpu Westmere
+	$(EMU) -m 256 -cdrom build/os.iso -cpu Westmere $(EMU_FLAGS)
 
 debug: clean all
 	gdb -q --args $(EMU) \
-        -enable-kvm -smp 2 -m 256 -cdrom build/os.iso -cpu Westmere
+        -enable-kvm -smp 2 -m 256 -cdrom build/os.iso -cpu Westmere $(EMU_FLAGS)
 
 
 # kernel artifacts
