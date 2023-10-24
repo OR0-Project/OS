@@ -12,3 +12,6 @@ kernel/inc/build.h
 
 # ignore vim swp file
 *.swp
+
+# Ignore memory dumps
+*.dmp
