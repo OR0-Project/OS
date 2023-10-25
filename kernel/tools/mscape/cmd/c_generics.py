@@ -1,5 +1,5 @@
 # //////////////////////////////////////////////////////////////////////////////
-# // File:     Name:        generics.py                                       //
+# // File:     Name:        c_generics.py                                     //
 # //           Language:    Python 3                                          //
 # //                                                                          //
 # // Details:  This file contains general purpose commands (e.g. clear, etc.) //

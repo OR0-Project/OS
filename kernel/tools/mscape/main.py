@@ -16,10 +16,10 @@ import sys
 MOD_DIR = os.path.abspath(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(f"{MOD_DIR}/cmd")
 
-import generics
-import manipl
-import tools
-import mmap
+import c_generics
+import c_manipl
+import c_tools
+import c_mmap
 
 # Vars
 WORK_DIR = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/../..") + "/work"
@@ -28,24 +28,27 @@ DUMP_PATH = f"{WORK_DIR}/dumps/{DUMP_NAME}"
 
 # Context
 fd = None # File
-DMP = None # Dump contents
 cur_addr = 0
 fsize = 0
+app = {
+    'mmap': None
+}
 
 # Command List
 # --------------------------------
 cmd_list = {
     # Basic commands
-    'exit': generics.cmd_exit,
-    'clear': generics.cmd_clear,
-    'offset': generics.cmd_offset,
+    'exit': c_generics.cmd_exit,
+    'clear': c_generics.cmd_clear,
+    'offset': c_generics.cmd_offset,
 
     # I/O
-    'read': manipl.cmd_read,
-    'dump': manipl.cmd_dump,
+    'read': c_manipl.cmd_read,
+    'dump': c_manipl.cmd_dump,
+    'mmap': c_mmap.cmd_mmap,
 
     # Utility commands
-    'ord': tools.cmd_ord
+    'ord': c_tools.cmd_ord
 }
 # --------------------------------
 
@@ -75,11 +78,12 @@ def shl():
                 'fsize': fsize,
                 'cmd_line': cmd_line,
                 'cmd': cmd,
-                'offset': cur_addr
+                'offset': cur_addr,
+                'app': app
             }
 
             # Execute command
-            cmd_list.get(cmd[0], generics.cmd_not_found)(context)
+            cmd_list.get(cmd[0], c_generics.cmd_not_found)(context)
 
             # Keep cur address synchronized
             cur_addr = context['offset']

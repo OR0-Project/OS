@@ -1,5 +1,5 @@
 # //////////////////////////////////////////////////////////////////////////////
-# // File:     Name:        manipl.py                                         //
+# // File:     Name:        c_manipl.py                                       //
 # //           Language:    Python 3                                          //
 # //                                                                          //
 # // Details:  This file contains manipulation commands.                      //
