@@ -89,6 +89,7 @@ def shl():
 # Entry point
 def main():
     print("MemScape 1.0.0")
+
     if not os.path.exists(DUMP_PATH):
         print("No dump has been made. Please run the dumping tool and rerun the program again.")
         return
@@ -96,6 +97,4 @@ def main():
     opendmp()
     shl()
 
-#main()
-
-mmap.parse("tools/kernel.mmap")
+main()

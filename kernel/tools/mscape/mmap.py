@@ -247,7 +247,7 @@ def _makeTree(toks):
         # Potential tag found
         if(tok["type"] == TOKENS["TOK_LRBRACK"]):
             if not _getToken(toks, x + 1, TOKENS["TOK_IDENTIFIER"]):
-                raise Exception("Identifier expected for section tag")
+                raise Exception("Identifier expected for tag")
             
             if not _getToken(toks, x + 2, TOKENS["TOK_STR"]):
                 raise Exception("String value expected")
@@ -255,7 +255,7 @@ def _makeTree(toks):
             if not _getToken(toks, x + 3, TOKENS["TOK_RRBRACK"]):
                 raise Exception("End of tag bracket expected")
 
-            ptree["nodes"].append({ "type": "tag", "name": toks[x + 2]["value"] })
+            ptree["nodes"].append({ "type": "tag", "name": toks[x + 2]["value"], "tag": toks[x + 1]["value"] })
             skip += 3
 
         # Check for keyword
@@ -289,15 +289,91 @@ def _makeTree(toks):
             else:
                 raise Exception(f"Keyword not implemented: {tok['value']}")
 
-    return ptree
+    return ptree['nodes']
+
+"""
+Represents a memory map
+"""
+class MemoryMap:
+    groups = []
+    ranges = []
+
+    """
+    Gets ranges from a specified group.
+    """
+    def getByGroup(self, name):
+        rng = []
+
+        for i in self.ranges:
+            rng.append(i)
+
+        return rng
+
+    """
+    Gets a range from the specified address
+    """
+    def getRangeByAddress(self, address):
+        for rng in self.ranges:
+            if address >= rng['_lhs'] and address <= rng['_rhs']:
+                return rng
+
+        return None
 
 """
 Parses a memory map file.
 """
 def parse(path):
+    mmap = MemoryMap()
+
     with open(path, 'r') as fd:
         tokens = lex(fd.read())
     
         # Make parsing tree
         ptree = _makeTree(tokens)
-        print(ptree)
+        cur_group = 'Default'
+
+        # State
+        for x in ptree:
+            # Process tag
+            if x['type'] == "tag":
+                if x['tag'] == "Group":
+                    if x['name'].strip() == "":
+                        raise Exception("Tag name cannot be empty")
+
+                    mmap.groups.append(x['name'])
+                    cur_group = x['name']
+                else:
+                    raise Exception(f"Tag not implemented: {x['tag']}")
+
+            # Process range expression
+            elif x['type'] == "rangeexpr":
+                debug_expr = f"({hex(x['lhs'])} - {hex(x['rhs'])})"
+                # Check if the range even makes sense
+                if x['lhs'] < 0:
+                    raise Exception(f"Invalid range expression '{debug_expr}': LHS < 0")
+                elif x['rhs'] < 0:
+                    raise Exception(f"Invalid range expression '{debug_expr}': RHS < 0")
+                elif (x['rhs'] - x['lhs']) < 0:
+                    raise Exception(f"Invalid range expression '{debug_expr}': RHS - LHS < 0")
+                elif x['rhs'] == x['lhs']:
+                    raise Exception(f"Invalid range expression '{debug_expr}': Not a range! RHS = LHS = 0")
+
+                range_obj = {
+                    'id': None,
+                    'group': cur_group,
+                    'description': '',
+                    '_lhs': x['lhs'],
+                    '_rhs': x['rhs']
+                }
+
+                # Validate properties
+                for prop in x['props']:
+                    range_obj[prop['id']] = prop['value']
+
+                if range_obj['id'] == None:
+                    raise Exception(f"Range expression '{debug_expr}' is missing the required 'id' field!")
+
+                # Append object
+                mmap.ranges.append(range_obj)
+
+    return mmap
