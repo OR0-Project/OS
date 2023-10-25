@@ -311,11 +311,21 @@ class MemoryMap:
         return rng
 
     """
-    Gets a range from the specified address
+    Gets a range from the specified address.
     """
     def getRangeByAddress(self, address):
         for rng in self.ranges:
             if address >= rng['_lhs'] and address <= rng['_rhs']:
+                return rng
+
+        return None
+
+    """
+    Gets a range by id.
+    """
+    def getRange(self, id):
+        for rng in self.ranges:
+            if rng['id'] == id:
                 return rng
 
         return None

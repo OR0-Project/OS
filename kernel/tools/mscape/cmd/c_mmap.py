@@ -18,6 +18,29 @@ import math
 WORK_DIR = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/../..")
 
 """
+Gets a range from the command.
+"""
+def _get_range(ctx):
+    if ctx['app']['mmap'] == None:
+        print("Error: no memory map is loaded.")
+        return None
+
+    cmdl = len(ctx['cmd'])
+
+    if cmdl < 3:
+        print(f"Error: no range id specified")
+        return None
+
+    rng_id = ctx['cmd'][2]
+    rng = ctx['app']['mmap'].getRange(rng_id)
+    
+    if rng == None:
+        print(f"Error: range does not exist")
+        return None
+
+    return { 'rng': rng, 'id': rng_id }
+
+"""
 Loads a memory map.
 """
 def subcmd_load(ctx):
@@ -83,10 +106,60 @@ def subcmd_view(ctx):
         print(f"└{'─' * 13}┴{'─' * 41}┴{'─' * 14}┴{'─' * 33}┘")
         print('')
 
+"""
+Range read subcommand.
+"""
+def subcmd_read(ctx):
+    arg = _get_range(ctx)
+
+    if arg == None:
+        return
+
+    rng = arg['rng']
+    fd = ctx['fd']
+    fd.seek(rng['_lhs'])
+    utils.print_hex_matrix(fd.read(rng['_rhs'] - rng['_lhs']), show_hdr = True, ascii_view = True, offset_view = True, starting_offset = rng['_lhs'])
+
+"""
+Range dump subcommand.
+"""
+def subcmd_dump(ctx):
+    RANGE_DIR = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/../../..") + "/work/dumps/ranges"
+    
+    if not os.path.exists(RANGE_DIR):
+        os.mkdir(RANGE_DIR)
+
+    # ---------------------
+    
+    cmdl = len(ctx['cmd'])
+
+    if cmdl < 4:
+        print("Usage: mmap dump <range> <file> - Dumps a range to <file>")
+        return
+
+    arg = _get_range(ctx)
+
+    if arg == None:
+        return
+
+    rng = arg['rng']
+    target = ctx['cmd'][3].strip()
+    fd = ctx['fd']
+
+    # Extract segment
+    fd.seek(rng['_lhs'])
+
+    with open(f"{RANGE_DIR}/{target}", 'wb') as file:
+        file.write(fd.read(rng['_rhs'] - rng['_lhs']))
+
+    print(f"Dump made of '{rng['id']}' with name '{target}'")
+
 # Command list
 subcmd_list = {
     'load': subcmd_load,
-    'view': subcmd_view
+    'view': subcmd_view,
+    'read': subcmd_read,
+    'dump': subcmd_dump
 }
 
 """
@@ -105,8 +178,11 @@ def cmd_mmap(ctx):
         print(f"Usage: mmap <command> [arguments]\n\
 \n\
 Valid commands are:\n\
-    load <path> - Loads a memory map file.\n\
-    view        - Views the loaded memory map.\n\
+    mmap dump <range> <file>     : Dumps a range to <file>\n\
+    load <path>                  : Loads a memory map file.\n\
+    read <id>                    : Reads the specified memory range.\n\
+    view                         : Views the loaded memory map.\n\
     ")
+        return
     
     subcmd_list.get(ctx['cmd'][1], cmd_not_found)(ctx)
