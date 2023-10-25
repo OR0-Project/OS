@@ -1,4 +1,15 @@
 #!/bin/bash
+# //////////////////////////////////////////////////////////////////////////////
+# // File:     Name:        makedump                                          //
+# //           Language:    Bash                                              //
+# //                                                                          //
+# // Details:  QEMU live memory dumping script.                               //
+# //                                                                          //
+# // Author:   Name:    Marijn Verschuren, Ralph Vreman                       //
+# //           Email:   marijnverschuren3@gmail.com                           //
+# //                                                                          //
+# // Date:     2023-10-25                                                     //
+# //////////////////////////////////////////////////////////////////////////////
 
 # Connection settings
 # This is configured in the Makefile

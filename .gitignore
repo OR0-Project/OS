@@ -18,3 +18,6 @@ kernel/inc/build.h
 
 # Work folder
 kernel/work
+
+# Python cache
+__pycache__
