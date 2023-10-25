@@ -48,9 +48,9 @@ def subcmd_view(ctx):
 
     for g in ctx['app']['mmap'].groups:
         print(g)
-        print(f"┌{'─' * 41}┬{'─' * 14}┬{'─' * 33}┐")
-        print(f'│ Range                                   │ Size         │ Description                     │ ')
-        print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
+        print(f"┌{'─' * 13}┬{'─' * 41}┬{'─' * 14}┬{'─' * 33}┐")
+        print(f'│ Id          │ Range                                   │ Size         │ Description                     │ ')
+        print(f'├─────────────┼─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
 
         ranges = ctx['app']['mmap'].getByGroup(g)
         rangelen = len(ranges)
@@ -65,14 +65,22 @@ def subcmd_view(ctx):
             else:
                 size_str = f"{'{:.2f}'.format(size / 1024)} KiB"
 
+            # Id
+            print(f"│ {rng['id']}{(12 - len(rng['id'])) * ' '}", end = "")
+
+            # Print range
             print(f'│ 0x{utils.zpad(rng["_lhs"], 16, use_hex = True)} - 0x{utils.zpad(rng["_rhs"], 16, use_hex = True)} │ ', end = "")
+
+            # Size calc
             print(f'{size_str}{(13 - len(size_str)) * " "}│ ', end = "")
+
+            # Description
             print(f'{rng["description"]}{(32 - len(rng["description"])) * " "}│')
 
             if (x + 1) < rangelen:
-                print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
+                print(f'├─────────────┼─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
         
-        print(f"└{'─' * 41}┴{'─' * 14}┴{'─' * 33}┘")
+        print(f"└{'─' * 13}┴{'─' * 41}┴{'─' * 14}┴{'─' * 33}┘")
         print('')
 
 # Command list
