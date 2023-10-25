@@ -305,7 +305,8 @@ class MemoryMap:
         rng = []
 
         for i in self.ranges:
-            rng.append(i)
+            if i['group'] == name:
+                rng.append(i)
 
         return rng
 

@@ -45,14 +45,18 @@ def subcmd_view(ctx):
     if ctx['app']['mmap'] == None:
         print("Error: no memory map is loaded.")
         return
-    
+
     for g in ctx['app']['mmap'].groups:
         print(g)
         print(f"┌{'─' * 41}┬{'─' * 14}┬{'─' * 33}┐")
         print(f'│ Range                                   │ Size         │ Description                     │ ')
         print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
 
-        for rng in ctx['app']['mmap'].getByGroup(g):
+        ranges = ctx['app']['mmap'].getByGroup(g)
+        rangelen = len(ranges)
+
+        for x in range(0, rangelen):
+            rng = ranges[x]
             size = rng['_rhs'] - rng['_lhs']
             size_str = ""
 
@@ -64,8 +68,11 @@ def subcmd_view(ctx):
             print(f'│ 0x{utils.zpad(rng["_lhs"], 16, use_hex = True)} - 0x{utils.zpad(rng["_rhs"], 16, use_hex = True)} │ ', end = "")
             print(f'{size_str}{(13 - len(size_str)) * " "}│ ', end = "")
             print(f'{rng["description"]}{(32 - len(rng["description"])) * " "}│')
-            print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
 
+            if (x + 1) < rangelen:
+                print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
+        
+        print(f"└{'─' * 41}┴{'─' * 14}┴{'─' * 33}┘")
         print('')
 
 # Command list
