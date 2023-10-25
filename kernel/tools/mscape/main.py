@@ -41,6 +41,7 @@ cmd_list = {
     'exit': c_generics.cmd_exit,
     'clear': c_generics.cmd_clear,
     'offset': c_generics.cmd_offset,
+    'help': c_generics.cmd_help,
 
     # I/O
     'read': c_manipl.cmd_read,

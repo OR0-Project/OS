@@ -10,7 +10,9 @@
 # // Date:     2023-10-25                                                     //
 # //////////////////////////////////////////////////////////////////////////////
 
-from os import system, name
+from os import system, name, path
+
+MS_DIR = path.abspath(path.dirname(path.abspath(__file__)) + "/..")
 
 # Command not found handler
 def cmd_not_found(ctx):
@@ -20,6 +22,11 @@ def cmd_not_found(ctx):
 # Exit command
 def cmd_exit(ctx):
     exit(0)
+
+# Help command
+def cmd_help(ctx):
+    with open(f'{MS_DIR}/res/help.txt', 'r') as file:
+        print(file.read())
 
 # Clear command
 def cmd_clear(ctx):
