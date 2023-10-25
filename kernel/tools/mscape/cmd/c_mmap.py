@@ -12,13 +12,15 @@
 
 import mmap
 import os
+import utils
+import math
 
 WORK_DIR = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/../..")
 
 """
 Loads a memory map.
 """
-def load_map(ctx):
+def subcmd_load(ctx):
     cmdl = len(ctx['cmd'])
 
     if cmdl < 3:
@@ -36,15 +38,46 @@ def load_map(ctx):
     
     print(f'Memory map loaded from "{fpath}"')
 
+"""
+Views the currently loaded memory map.
+"""
+def subcmd_view(ctx):
+    if ctx['app']['mmap'] == None:
+        print("Error: no memory map is loaded.")
+        return
+    
+    for g in ctx['app']['mmap'].groups:
+        print(g)
+        print(f"┌{'─' * 41}┬{'─' * 14}┬{'─' * 33}┐")
+        print(f'│ Range                                   │ Size         │ Description                     │ ')
+        print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
 
+        for rng in ctx['app']['mmap'].getByGroup(g):
+            size = rng['_rhs'] - rng['_lhs']
+            size_str = ""
+
+            if size > (1024 * 1024): # 1 MiB
+                size_str = f"{'{:.2f}'.format(size / 1024 / 1024)} MiB"
+            else:
+                size_str = f"{'{:.2f}'.format(size / 1024)} KiB"
+
+            print(f'│ 0x{utils.zpad(rng["_lhs"], 16, use_hex = True)} - 0x{utils.zpad(rng["_rhs"], 16, use_hex = True)} │ ', end = "")
+            print(f'{size_str}{(13 - len(size_str)) * " "}│ ', end = "")
+            print(f'{rng["description"]}{(32 - len(rng["description"])) * " "}│')
+            print(f'├─────────────────────────────────────────┼──────────────┼─────────────────────────────────┤ ')
+
+        print('')
+
+# Command list
 subcmd_list = {
-    'load': load_map
+    'load': subcmd_load,
+    'view': subcmd_view
 }
 
 """
 Sub-command not found handler.
 """
-def cmd_not_found():
+def cmd_not_found(ctx):
     print("invalid subcommand.")
 
 """
