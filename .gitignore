@@ -1,11 +1,13 @@
 # Build artifacts
 .vscode
-kernel/build
-kernel/cdrom/sys/*.bin
-kernel/obj
+/kernelbuild/*
+/cdrom/sys/*.bin
+/kernel/obj/*
+/bootstrapper/legacy/*/build
+/bootstrapper/legacy/*/obj
 
 # build file
-kernel/inc/build.h
+build.h
 
 # ide config
 .idea
@@ -17,7 +19,8 @@ kernel/inc/build.h
 *.dmp
 
 # Work folder
-kernel/work
+/work
+/kernel/work
 
 # Python cache
 __pycache__
