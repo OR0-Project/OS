@@ -1,3 +1,6 @@
 [submodule "stdlib"]
 	path = stdlib
 	url = git@github.com:OR0-Project/std_lib.git
+[submodule "tools"]
+	path = tools
+	url = git@github.com:OR0-Project/tools.git
