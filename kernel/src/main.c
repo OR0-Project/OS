@@ -68,12 +68,11 @@ void kernel_main() {
     // test
     volatile char* mt = (char*)0x2a5C0;
 
-    *mt = 'a';
+    mt = 'a';
     mt++;
-    *mt = 'b';
+    mt = 'b';
     mt++;
-    *mt = 'c';
-    mt++;
+    mt = 'c';
     while(1);
 
     throw_ex("kmain", "End of kernel - development needed");
