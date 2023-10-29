@@ -6,7 +6,10 @@
 - [ ] timer
 
 ### High Priority
-- [ ] 64-bit
+- [X] 64-bit
+- [ ] Create hybrid loaders (uefi and legacy)
+    - [X] UEFI
+    - [ ] Legacy
 
 ### Low Priority
 - [ ] legacy interrupt controller (8259 PIC)

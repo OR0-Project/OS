@@ -18,6 +18,9 @@ build.h
 # Ignore memory dumps
 *.dmp
 
+# Ignore efi bins
+*.efi
+
 # Work folder
 /work
 /kernel/work
