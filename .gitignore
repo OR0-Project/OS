@@ -27,3 +27,6 @@ build.h
 
 # Python cache
 __pycache__
+
+# Ignore hidden folders
+/__*
