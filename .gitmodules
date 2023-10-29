@@ -4,3 +4,6 @@
 [submodule "tools"]
 	path = tools
 	url = git@github.com:OR0-Project/tools.git
+[submodule "bstrapper"]
+	path = bstrapper
+	url = git@github.com:OR0-Project/bootstrapper.git
