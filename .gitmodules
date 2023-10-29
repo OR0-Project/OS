@@ -1,0 +1,12 @@
+[submodule "stdlib"]
+	path = stdlib
+	url = git@github.com:OR0-Project/std_lib.git
+[submodule "tools"]
+	path = tools
+	url = git@github.com:OR0-Project/tools.git
+[submodule "bstrapper"]
+	path = bstrapper
+	url = git@github.com:OR0-Project/bootstrapper.git
+[submodule "kernel"]
+	path = kernel
+	url = git@github.com:OR0-Project/kernel.git

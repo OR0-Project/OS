@@ -1,7 +1,0 @@
-[
-    {
-        "name": "kernel",
-        "path": "./kernel/src",
-        "extensions": [".c", ".h", ".asm", ".ld"]
-    }
-]
