@@ -5,6 +5,7 @@
 /kernel/obj/*
 /bootstrapper/legacy/*/build
 /bootstrapper/legacy/*/obj
+/build
 
 # build file
 build.h
