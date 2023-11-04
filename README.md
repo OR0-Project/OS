@@ -10,7 +10,7 @@ If your system does not have mkdocs, you can install it by following their instr
 
 OS: Linux / Windows (WSL)
 
-Packages (Debian): `gcc nasm grub-pc-bin grub-efi-amd64-bin qemu-system-x86_64 python3 python3-pip build-essential`
+Packages (Debian): `gcc nasm grub-pc-bin grub-efi-amd64-bin qemu-system-x86 python3 python3-pip build-essential xorriso mtools`
 
 ### WSL specifics
 
