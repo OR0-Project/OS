@@ -46,6 +46,8 @@ kernel64:
 
 # ///////////////////////////////////////////////////////////////////////////
 # legacy targets ////////////////////////////////////////////////////////////
+run-legacy: build-all qemu-legacy
+
 qemu-legacy:
 	$(EMU) -m 256 -cpu Westmere -name "OS Development Emulator" -cdrom build/OS.iso
 
@@ -57,6 +59,8 @@ loader:
 
 # ///////////////////////////////////////////////////////////////////////////
 # uefi targets //////////////////////////////////////////////////////////////
+run-uefi: build-all qemu-uefi
+
 qemu-uefi:
 	$(EMU) -m 512 -cpu Westmere -name "OS Development Emulator (UEFI)" -cdrom build/OS.iso \
 		-bios /usr/share/OVMF/OVMF_CODE.fd \
