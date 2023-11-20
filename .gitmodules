@@ -10,3 +10,6 @@
 [submodule "kernel"]
 	path = kernel
 	url = git@github.com:OR0-Project/kernel.git
+[submodule "boot"]
+	path = boot
+	url = git@github.com:OR0-Project/boot.git
